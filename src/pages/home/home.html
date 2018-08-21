@@ -1,14 +1,70 @@
 <ion-header>
-  <ion-navbar>
-    <ion-title>
-      Ionic Blank
-    </ion-title>
-  </ion-navbar>
+    <ion-navbar color="dark" text-center>
+        <ion-title>
+            Lista de pendientes
+        </ion-title>
+    </ion-navbar>
 </ion-header>
 
 <ion-content padding>
-  The world is your oyster.
-  <p>
-    If you get lost, the <a href="http://ionicframework.com/docs/v2">docs</a> will be your guide.
-  </p>
+
+    <ion-list>
+        <form (ngSubmit)="agregarPendiente()">
+            <ion-item>
+                <ion-input [(ngModel)]="nuevo_pendiente" name="nuevopendiente" placeholder="Nuevo pendiente..." type="text"></ion-input>
+                <button type="submit" [disabled]="!nuevo_pendiente" ion-button item-end icon-end>
+              Añadir 
+              <ion-icon name="add-circle"></ion-icon>
+            </button>
+            </ion-item>
+        </form>
+    </ion-list>
+
+    <ion-refresher (ionRefresh)="doRefresh($event)">
+        <ion-refresher-content></ion-refresher-content>
+    </ion-refresher>
+
+    <ion-list>
+        <div *ngIf="_pp.lista_pendientes.length; else noContenido">
+            <ion-item text-right>
+                <small>Total de pendientes: {{ _pp.lista_pendientes.length }}</small>
+            </ion-item>
+            <ion-item-sliding #slidingItem *ngFor="let pendiente of _pp.lista_pendientes">
+                <ion-item>
+                    <div item-start>
+                        <ion-icon name="radio-button-on"></ion-icon>
+                    </div>
+                    <h2>{{ pendiente.titulo }}</h2>
+                    <small>Creada el: {{ pendiente.created_at }} </small>
+                </ion-item>
+
+                <ion-item-options side="right">
+                    <button ion-button color="secondary" (click)="verEditarModal(pendiente, slidingItem)">
+                        <ion-icon name="create"></ion-icon>
+                        Editar
+                    </button>
+                    <button ion-button color="danger" (click)="borrarPendiente(pendiente, slidingItem)">
+                        <ion-icon name="trash"></ion-icon>
+                        Borrar
+                    </button>
+                </ion-item-options>
+            </ion-item-sliding>
+            <div text-right>
+                <small>
+                    * Deslizar
+                </small>
+            </div>
+
+        </div>
+        <ng-template #noContenido>
+            <ion-list>
+                <ion-item text-center>
+                    <ion-icon name="happy"></ion-icon>
+                    <h3>Sin pendientes que mostrar</h3>
+                </ion-item>
+            </ion-list>
+        </ng-template>
+
+    </ion-list>
+
 </ion-content>

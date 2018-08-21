@@ -1,0 +1,33 @@
+<ion-header>
+
+    <ion-toolbar color="dark">
+        <ion-title>
+            Editar
+        </ion-title>
+        <ion-buttons start>
+            <button ion-button (click)="dismiss()">
+            <span ion-text color="primary" showWhen="ios">Cancelar</span>
+            <ion-icon name="close" showWhen="android,windows"></ion-icon>
+          </button>
+        </ion-buttons>
+    </ion-toolbar>
+
+</ion-header>
+
+
+<ion-content padding>
+
+    <form (ngSubmit)="editarPendiente()">
+        <ion-list>
+            <ion-item>
+                <ion-label stacked>Titulo</ion-label>
+                <ion-input type="text" name="titulo" [(ngModel)]="selected_pendiente.titulo" placeholder="Escribe un pendiente..."></ion-input>
+            </ion-item>
+            <small *ngIf="!selected_pendiente.titulo" style="color:brown" padding>
+                *Establece un título para poder guardar cambios.
+            </small>
+        </ion-list>
+        <button type="submit" color="primary" ion-button block [disabled]="!selected_pendiente.titulo">Guardar cambios</button>
+    </form>
+
+</ion-content>

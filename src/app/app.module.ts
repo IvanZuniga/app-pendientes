@@ -5,8 +5,13 @@ import { SplashScreen } from '@ionic-native/splash-screen';
 import { StatusBar } from '@ionic-native/status-bar';
 
 import { MyApp } from './app.component';
+import { HttpClientModule } from '@angular/common/http';
+
+//Páginas
 import { HomePage } from '../pages/home/home';
-import { ApiProvider } from '../providers/api/api';
+
+// Servicios
+import { PendientesProvider } from '../providers/pendientes/pendientes';
 
 @NgModule({
   declarations: [
@@ -15,7 +20,8 @@ import { ApiProvider } from '../providers/api/api';
   ],
   imports: [
     BrowserModule,
-    IonicModule.forRoot(MyApp)
+    IonicModule.forRoot(MyApp),
+    HttpClientModule
   ],
   bootstrap: [IonicApp],
   entryComponents: [
@@ -26,7 +32,7 @@ import { ApiProvider } from '../providers/api/api';
     StatusBar,
     SplashScreen,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
-    ApiProvider
+    PendientesProvider,
   ]
 })
 export class AppModule {}
